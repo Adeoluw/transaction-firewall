@@ -1,0 +1,10 @@
+{
+  "comment": "Mocked on-chain age lookup (days since first activity). Unknown addresses are treated as fresh.",
+  "ages": {
+    "0x7770000000000000000000000000000000000777": 1120,
+    "0x5500000000000000000000000000000000000055": 1450,
+    "0xaaaa00000000000000000000000000000000aaaa": 400,
+    "0xbad0000000000000000000000000000000000bad": 2
+  },
+  "freshThresholdDays": 30
+}

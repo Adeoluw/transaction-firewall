@@ -1,0 +1,121 @@
+{
+  "generatedBy": "npm run seed",
+  "addresses": {
+    "treasury": "0xaaaa00000000000000000000000000000000aaaa",
+    "attacker": "0xbad0000000000000000000000000000000000bad",
+    "router": "0x7770000000000000000000000000000000000777",
+    "usdc": "0x5500000000000000000000000000000000000055",
+    "evilRouter": "0xee1100000000000000000000000000000000ee11",
+    "nft": "0xbeef000000000000000000000000000000000beef"
+  },
+  "samples": [
+    {
+      "id": "hidden-approval",
+      "name": "🎯 Hidden approval drain (hero payload)",
+      "claimed": "Swap 100 USDC → TOKEN via Router",
+      "expected": "malicious",
+      "tx": {
+        "from": "0xaaaa00000000000000000000000000000000aaaa",
+        "value": "0",
+        "chainId": 31337,
+        "to": "0x5500000000000000000000000000000000000055",
+        "data": "0x095ea7b3000000000000000000000000bad0000000000000000000000000000000000badffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      }
+    },
+    {
+      "id": "safe-swap",
+      "name": "✅ Legit swap via allowlisted router",
+      "claimed": "Swap 100 USDC → TOKEN via Router",
+      "expected": "safe",
+      "tx": {
+        "from": "0xaaaa00000000000000000000000000000000aaaa",
+        "value": "0",
+        "chainId": 31337,
+        "to": "0x7770000000000000000000000000000000000777",
+        "data": "0x38ed17390000000000000000000000000000000000000000000000000000000005f5e1000000000000000000000000000000000000000000000000000000000005e69ec000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000aaaa00000000000000000000000000000000aaaa00000000000000000000000000000000000000000000000000000002540be3ff0000000000000000000000000000000000000000000000000000000000000002000000000000000000000000550000000000000000000000000000000000005500000000000000000000000000b000000000000000000000000000000000b000"
+      }
+    },
+    {
+      "id": "safe-approve",
+      "name": "✅ Bounded approve to allowlisted router",
+      "claimed": "Approve Router to spend 100 USDC",
+      "expected": "safe",
+      "tx": {
+        "from": "0xaaaa00000000000000000000000000000000aaaa",
+        "value": "0",
+        "chainId": 31337,
+        "to": "0x5500000000000000000000000000000000000055",
+        "data": "0x095ea7b300000000000000000000000077700000000000000000000000000000000007770000000000000000000000000000000000000000000000000000000005f5e100"
+      }
+    },
+    {
+      "id": "over-cap-transfer",
+      "name": "⚠️ Over-cap transfer (legit but too big)",
+      "claimed": "Transfer 900 USDC to Router",
+      "expected": "suspicious",
+      "tx": {
+        "from": "0xaaaa00000000000000000000000000000000aaaa",
+        "value": "0",
+        "chainId": 31337,
+        "to": "0x5500000000000000000000000000000000000055",
+        "data": "0xa9059cbb00000000000000000000000077700000000000000000000000000000000007770000000000000000000000000000000000000000000000000000000035a4e900"
+      }
+    },
+    {
+      "id": "lying-contract",
+      "name": "🥷 Lying router — clean calldata, drains on execution (sim-only catch)",
+      "claimed": "Swap 100 USDC → TOKEN via DEXMax (allowlisted)",
+      "expected": "malicious",
+      "simOnly": true,
+      "offlineExpected": "safe",
+      "tx": {
+        "from": "0xaaaa00000000000000000000000000000000aaaa",
+        "value": "0",
+        "chainId": 31337,
+        "to": "0xee1100000000000000000000000000000000ee11",
+        "data": "0x38ed17390000000000000000000000000000000000000000000000000000000005f5e1000000000000000000000000000000000000000000000000000000000005e69ec000000000000000000000000000000000000000000000000000000000000000a0000000000000000000000000aaaa00000000000000000000000000000000aaaa00000000000000000000000000000000000000000000000000000002540be3ff000000000000000000000000000000000000000000000000000000000000000200000000000000000000000055000000000000000000000000000000000000550000000000000000000000007770000000000000000000000000000000000777"
+      }
+    },
+    {
+      "id": "increase-allowance",
+      "name": "🎭 increaseAllowance — unlimited via a non-approve selector",
+      "claimed": "Top up Router allowance",
+      "expected": "malicious",
+      "tx": {
+        "from": "0xaaaa00000000000000000000000000000000aaaa",
+        "value": "0",
+        "chainId": 31337,
+        "to": "0x5500000000000000000000000000000000000055",
+        "data": "0x39509351000000000000000000000000bad0000000000000000000000000000000000badffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffffff"
+      }
+    },
+    {
+      "id": "approve-all-nft",
+      "name": "🖼️ setApprovalForAll — hands over every NFT",
+      "claimed": "List NFT collection on marketplace",
+      "expected": "malicious",
+      "tx": {
+        "from": "0xaaaa00000000000000000000000000000000aaaa",
+        "value": "0",
+        "chainId": 31337,
+        "to": "0xbeef000000000000000000000000000000000beef",
+        "data": "0xa22cb465000000000000000000000000bad0000000000000000000000000000000000bad0000000000000000000000000000000000000000000000000000000000000001"
+      }
+    },
+    {
+      "id": "batch-rider",
+      "name": "🎁 Batch rider — real rebalance + hidden drain in one call",
+      "claimed": "Rebalance 10 USDC to Router",
+      "expected": "malicious",
+      "simOnly": true,
+      "offlineExpected": "suspicious",
+      "tx": {
+        "from": "0xaaaa00000000000000000000000000000000aaaa",
+        "value": "0",
+        "chainId": 31337,
+        "to": "0xee1100000000000000000000000000000000ee11",
+        "data": "0x0d27d0720000000000000000000000000000000000000000000000000000000000989680"
+      }
+    }
+  ]
+}

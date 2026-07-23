@@ -1,0 +1,262 @@
+<style>
+  :root {
+    --bg: #F7F8FA; --surface: #FFFFFF; --raised: #FBFCFE;
+    --ink: #111722; --muted: #58616F; --faint: #828C9B;
+    --line: #E4E8EE; --accent: #2A5FD6; --accent-soft: #EAF0FD;
+    --safe: #137A52; --safe-soft: #E4F4EC;
+    --warn: #955F12; --warn-soft: #F8EFDD;
+    --danger: #C1354C; --danger-soft: #FBE7EB;
+    --shadow: 0 1px 2px rgba(17,23,34,.04), 0 6px 20px rgba(17,23,34,.05);
+    --sans: system-ui, -apple-system, "Segoe UI", Roboto, Helvetica, Arial, sans-serif;
+    --mono: ui-monospace, "SF Mono", "Cascadia Code", "Cascadia Mono", Consolas, monospace;
+  }
+  @media (prefers-color-scheme: dark) {
+    :root {
+      --bg: #0B0E13; --surface: #131924; --raised: #182030;
+      --ink: #E9EEF6; --muted: #97A2B4; --faint: #6E7A8C;
+      --line: #232C3A; --accent: #6BA1FF; --accent-soft: #16233B;
+      --safe: #37C88C; --safe-soft: #10281F;
+      --warn: #E3B65E; --warn-soft: #2A2314;
+      --danger: #F06B7F; --danger-soft: #2C141A;
+      --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.32);
+    }
+  }
+  :root[data-theme="light"] {
+    --bg: #F7F8FA; --surface: #FFFFFF; --raised: #FBFCFE;
+    --ink: #111722; --muted: #58616F; --faint: #828C9B;
+    --line: #E4E8EE; --accent: #2A5FD6; --accent-soft: #EAF0FD;
+    --safe: #137A52; --safe-soft: #E4F4EC;
+    --warn: #955F12; --warn-soft: #F8EFDD;
+    --danger: #C1354C; --danger-soft: #FBE7EB;
+    --shadow: 0 1px 2px rgba(17,23,34,.04), 0 6px 20px rgba(17,23,34,.05);
+  }
+  :root[data-theme="dark"] {
+    --bg: #0B0E13; --surface: #131924; --raised: #182030;
+    --ink: #E9EEF6; --muted: #97A2B4; --faint: #6E7A8C;
+    --line: #232C3A; --accent: #6BA1FF; --accent-soft: #16233B;
+    --safe: #37C88C; --safe-soft: #10281F;
+    --warn: #E3B65E; --warn-soft: #2A2314;
+    --danger: #F06B7F; --danger-soft: #2C141A;
+    --shadow: 0 1px 2px rgba(0,0,0,.3), 0 8px 24px rgba(0,0,0,.32);
+  }
+
+  * { box-sizing: border-box; }
+  body { margin: 0; background: var(--bg); color: var(--ink); font-family: var(--sans);
+    line-height: 1.6; -webkit-font-smoothing: antialiased; }
+  .wrap { max-width: 940px; margin: 0 auto; padding: clamp(24px, 5vw, 56px) clamp(18px, 4vw, 40px) 64px; }
+
+  .eyebrow { font-family: var(--mono); font-size: .72rem; letter-spacing: .18em;
+    text-transform: uppercase; color: var(--accent); font-weight: 600; }
+
+  /* Masthead */
+  .masthead { display: flex; gap: 20px; align-items: flex-start; padding-bottom: 22px;
+    border-bottom: 1px solid var(--line); margin-bottom: 34px; }
+  .shield { flex: none; width: 52px; height: 52px; color: var(--accent); }
+  .masthead h1 { font-size: clamp(1.9rem, 4.6vw, 2.7rem); line-height: 1.05; margin: 8px 0 6px;
+    font-weight: 800; letter-spacing: -.02em; text-wrap: balance; }
+  .thesis { font-size: clamp(1.02rem, 2.2vw, 1.18rem); color: var(--muted); margin: 0; max-width: 58ch; }
+
+  section { margin-top: 38px; }
+  h2 { font-size: 1.02rem; font-weight: 700; letter-spacing: -.01em; margin: 0 0 14px;
+    display: flex; align-items: baseline; gap: 10px; }
+  h2 .n { font-family: var(--mono); font-size: .78rem; color: var(--faint); font-weight: 600; }
+  p { margin: 0 0 12px; max-width: 68ch; }
+  strong { color: var(--ink); font-weight: 650; }
+  .lead { color: var(--muted); }
+
+  .card { background: var(--surface); border: 1px solid var(--line); border-radius: 12px;
+    padding: 18px 20px; box-shadow: var(--shadow); }
+
+  /* Problem callout */
+  .callout { border-left: 3px solid var(--danger); background: var(--danger-soft);
+    border-radius: 0 10px 10px 0; padding: 14px 18px; }
+  .callout p { margin: 0; color: var(--ink); }
+  .callout .tag { font-family: var(--mono); font-size: .7rem; letter-spacing: .12em;
+    text-transform: uppercase; color: var(--danger); font-weight: 700; display: block; margin-bottom: 4px; }
+
+  /* Four checks */
+  .checks { display: grid; grid-template-columns: repeat(2, 1fr); gap: 12px; }
+  @media (max-width: 560px) { .checks { grid-template-columns: 1fr; } }
+  .check { background: var(--surface); border: 1px solid var(--line); border-radius: 11px; padding: 15px 16px; }
+  .check .label { font-family: var(--mono); font-size: .72rem; letter-spacing: .1em; text-transform: uppercase;
+    color: var(--accent); font-weight: 600; display: block; margin-bottom: 6px; }
+  .check b { font-size: 1rem; display: block; margin-bottom: 3px; }
+  .check span.d { color: var(--muted); font-size: .92rem; }
+
+  /* Enforcement strip */
+  .enforce { margin-top: 14px; display: flex; gap: 14px; align-items: center; flex-wrap: wrap;
+    background: var(--accent-soft); border: 1px solid var(--line); border-radius: 11px; padding: 15px 18px; }
+  .enforce .verdicts { display: flex; gap: 8px; flex-wrap: wrap; }
+  .pill { font-family: var(--mono); font-size: .74rem; font-weight: 700; letter-spacing: .04em;
+    padding: 4px 11px; border-radius: 999px; white-space: nowrap; }
+  .pill.safe { color: var(--safe); background: var(--safe-soft); }
+  .pill.warn { color: var(--warn); background: var(--warn-soft); }
+  .pill.bad { color: var(--danger); background: var(--danger-soft); }
+  .enforce p { margin: 0; font-size: .95rem; flex: 1; min-width: 240px; }
+
+  /* Screen walkthrough */
+  .steps { display: flex; flex-direction: column; gap: 10px; }
+  .step { display: flex; gap: 14px; align-items: flex-start; background: var(--surface);
+    border: 1px solid var(--line); border-radius: 11px; padding: 14px 16px; }
+  .step .num { flex: none; width: 26px; height: 26px; border-radius: 7px; background: var(--accent);
+    color: #fff; font-family: var(--mono); font-weight: 700; font-size: .82rem;
+    display: grid; place-items: center; margin-top: 1px; }
+  :root[data-theme="dark"] .step .num, @media (prefers-color-scheme: dark) { }
+  .step b { display: block; font-size: .98rem; }
+  .step span.d { color: var(--muted); font-size: .92rem; }
+
+  /* Believable grid */
+  .proof-grid { display: grid; grid-template-columns: repeat(2, 1fr); gap: 10px; }
+  @media (max-width: 560px) { .proof-grid { grid-template-columns: 1fr; } }
+  .fact { display: flex; gap: 10px; align-items: flex-start; font-size: .94rem; padding: 4px 2px; }
+  .fact .dot { flex: none; width: 18px; height: 18px; border-radius: 999px; background: var(--safe-soft);
+    color: var(--safe); display: grid; place-items: center; font-size: .7rem; font-weight: 800; margin-top: 2px; }
+
+  /* Pull quote */
+  .quote { margin-top: 40px; background: var(--ink); color: var(--bg); border-radius: 14px;
+    padding: clamp(22px, 4vw, 34px); }
+  .quote .eyebrow { color: var(--accent); }
+  .quote p { font-size: clamp(1.08rem, 2.4vw, 1.34rem); font-weight: 600; line-height: 1.45;
+    margin: 10px 0 0; max-width: 62ch; letter-spacing: -.01em; }
+  :root[data-theme="dark"] .quote { background: var(--raised); color: var(--ink); border: 1px solid var(--line); }
+  @media (prefers-color-scheme: dark) { .quote { background: var(--raised); color: var(--ink); border: 1px solid var(--line); } }
+
+  footer { margin-top: 34px; padding-top: 20px; border-top: 1px solid var(--line);
+    display: flex; gap: 20px; flex-wrap: wrap; justify-content: space-between; align-items: center; }
+  footer .biz { font-size: .92rem; color: var(--muted); max-width: 48ch; }
+  footer .biz strong { color: var(--ink); }
+  .safenote { font-family: var(--mono); font-size: .74rem; color: var(--safe); letter-spacing: .02em; }
+
+  @media print {
+    body { background: #fff; }
+    .card, .check, .step, .enforce, .quote { box-shadow: none; }
+    section { break-inside: avoid; }
+  }
+</style>
+
+<div class="wrap">
+  <header class="masthead">
+    <svg class="shield" viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.6"
+         stroke-linecap="round" stroke-linejoin="round" aria-hidden="true">
+      <path d="M12 2.5 4.5 5.5v6c0 4.6 3.2 7.9 7.5 9.5 4.3-1.6 7.5-4.9 7.5-9.5v-6L12 2.5Z"/>
+      <path d="m8.8 12 2.2 2.2 4.2-4.4"/>
+    </svg>
+    <div>
+      <span class="eyebrow">One-page overview · for judges</span>
+      <h1>Transaction Firewall</h1>
+      <p class="thesis">A safety checkpoint that lets an AI manage money without getting robbed.</p>
+    </div>
+  </header>
+
+  <section>
+    <h2>The problem</h2>
+    <p class="lead">AI assistants are starting to control real crypto wallets — and they can be
+      <strong>tricked</strong>. Feed one a sneaky transaction, it signs it thinking it's routine, and the
+      money is gone. The AI is both trusting and able to sign on its own, with no human to say "wait, this
+      looks off."</p>
+    <div class="callout">
+      <span class="tag">Already happened</span>
+      <p>In May 2026, an attacker prompt-injected the <strong>Grok / Bankr AI agent</strong> (via a Morse-code
+        message on X) into signing away <strong>3&nbsp;billion tokens — about&nbsp;$150,000</strong> from the
+        wallet it controlled.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>What it is</h2>
+    <p class="lead">A <strong>security guard that stands between the AI and the money</strong>. Before anything
+      is signed, the guard inspects the transaction and can slam the door. If the verdict isn't safe, it
+      <strong>refuses to sign</strong> — and without its signature, the funds physically cannot move. It's not
+      a warning the AI can ignore; it's a locked door.</p>
+  </section>
+
+  <section>
+    <h2>How the guard decides</h2>
+    <div class="checks">
+      <div class="check">
+        <span class="label">Read</span>
+        <b>What it really does</b>
+        <span class="d">Ignores the friendly label and finds the transaction's true intent — a "swap" that's
+          actually "hand over my whole wallet."</span>
+      </div>
+      <div class="check">
+        <span class="label">Simulate</span>
+        <b>Test-run in a sealed sandbox</b>
+        <span class="d">Runs the transaction inside a throwaway copy of the blockchain and watches the money.
+          If it drains, the guard knows for certain — nothing real is touched.</span>
+      </div>
+      <div class="check">
+        <span class="label">Screen</span>
+        <b>Check the wanted list</b>
+        <span class="d">Is the recipient a known thief? Uses a real, public list of ~2,500 criminal addresses,
+          refreshed from the internet.</span>
+      </div>
+      <div class="check">
+        <span class="label">Rules</span>
+        <b>Check your house rules</b>
+        <span class="d">No unlimited spending, no sending to strangers, nothing over your set limit.</span>
+      </div>
+    </div>
+    <div class="enforce">
+      <div class="verdicts">
+        <span class="pill safe">SAFE</span>
+        <span class="pill warn">SUSPICIOUS</span>
+        <span class="pill bad">MALICIOUS</span>
+      </div>
+      <p>The guard returns a verdict and <strong>holds the signing key</strong> — it signs the safe ones and
+        <strong>refuses everything else</strong>.</p>
+    </div>
+  </section>
+
+  <section>
+    <h2>What's on the screen <span class="n">the live demo</span></h2>
+    <div class="steps">
+      <div class="step"><span class="num">1</span><div><b>The two-run demo</b><span class="d"> — the same
+        attack runs twice. Without the guard the wallet empties to zero; with it, blocked and untouched. Edit
+        it live to prove it's not scripted.</span></div></div>
+      <div class="step"><span class="num">2</span><div><b>The attack console</b><span class="d"> — a menu of
+        eight prepared transactions: two genuinely safe, six attacks each hiding a different way (disguised
+        approval, a "lying" contract, an NFT grab, a hidden rider, and more).</span></div></div>
+      <div class="step"><span class="num">3</span><div><b>Attack the agent, live</b><span class="d"> — a real
+        AI agent anyone can try to sweet-talk into moving funds. Even when it gets fooled, with the firewall on
+        the guard refuses to sign, so it doesn't matter.</span></div></div>
+      <div class="step"><span class="num">4</span><div><b>Real-world proof</b><span class="d"> — one click
+        forks the <em>real</em> Ethereum network, uses <em>real</em> dollars, and aims a <em>real</em>
+        blocklisted criminal address at it. Every address is checkable on a public explorer.</span></div></div>
+      <div class="step"><span class="num">5</span><div><b>Historical replay</b><span class="d"> — replays real
+        past thefts byte-for-byte, <strong>including the actual Grok hack</strong>. The real theft reproduces
+        in the sandbox; the guard refuses the identical transaction.</span></div></div>
+    </div>
+  </section>
+
+  <section>
+    <h2>Why it's believable, not a mock</h2>
+    <div class="proof-grid">
+      <div class="fact"><span class="dot">✓</span><span>Runs on a <strong>real copy of the real
+        blockchain</strong>, not pretend data.</span></div>
+      <div class="fact"><span class="dot">✓</span><span>Uses a <strong>real, public criminal list</strong>
+        pulled live from the internet.</span></div>
+      <div class="fact"><span class="dot">✓</span><span><strong>Really enforces</strong> — it blocks by
+        withholding a signature, not by advice.</span></div>
+      <div class="fact"><span class="dot">✓</span><span><strong>37 automated tests</strong> pass, runnable in
+        seconds on stage.</span></div>
+      <div class="fact"><span class="dot">✓</span><span>Replays <strong>real, verifiable thefts</strong>
+        anyone can look up on a public explorer.</span></div>
+      <div class="fact"><span class="dot">✓</span><span>All of it in a <strong>sealed, throwaway copy</strong>
+        — no real network, funds, or system touched.</span></div>
+    </div>
+  </section>
+
+  <div class="quote">
+    <span class="eyebrow">In one sentence</span>
+    <p>It reads what a transaction really does, test-runs it in a sealed sandbox to watch the money, checks it
+      against known thieves and your rules, and physically refuses to sign anything dangerous — proven against
+      real on-chain thefts, including the actual Grok AI hack.</p>
+  </div>
+
+  <footer>
+    <p class="biz"><strong>The business:</strong> a paid security layer — a small fee every time it checks a
+      transaction and keeps an AI from getting robbed.</p>
+    <span class="safenote">🔒 sealed sandbox · nothing real is ever touched</span>
+  </footer>
+</div>

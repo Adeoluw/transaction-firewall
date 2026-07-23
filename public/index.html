@@ -1,0 +1,190 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8" />
+<meta name="viewport" content="width=device-width, initial-scale=1" />
+<title>Transaction Firewall — Demo</title>
+<link rel="stylesheet" href="style.css" />
+</head>
+<body>
+<header>
+  <h1>🛡️ Transaction Firewall</h1>
+  <p class="tagline">AI agents call it <em>before</em> they sign. Simulate → Decode → Screen → Policy → Verdict.</p>
+</header>
+
+<!-- ATTACKER PANEL -->
+<section class="attacker card">
+  <div class="card-head">
+    <h2>😈 Attacker Console</h2>
+    <span class="hint">The Trader Agent received this transaction and believes the label. The firewall doesn't.</span>
+  </div>
+
+  <div class="row">
+    <label>Prepared payload
+      <select id="sampleSelect"></select>
+    </label>
+    <label>Claimed action <span class="lie" id="lieTag">as told to the agent</span>
+      <input id="claimed" />
+    </label>
+  </div>
+
+  <div class="row">
+    <label>To (contract)
+      <input id="txTo" spellcheck="false" />
+    </label>
+  </div>
+
+  <label>Calldata (the actual bytes)
+    <textarea id="txData" rows="3" spellcheck="false"></textarea>
+  </label>
+
+  <details id="morseBox">
+    <summary>📡 Deliver as encoded transmission (Morse — the Grok/Bankr trick)</summary>
+    <textarea id="morseData" rows="4" spellcheck="false" readonly></textarea>
+    <div class="btnrow">
+      <button id="morseEncode" class="ghost">Encode current payload → Morse</button>
+      <button id="morseDecode" class="ghost">Decode Morse → load payload</button>
+    </div>
+  </details>
+
+  <details>
+    <summary>✏️ Live edit — prove it's not hardcoded</summary>
+    <div class="row editrow">
+      <label>Function
+        <select id="editFn">
+          <option value="approve">approve</option>
+          <option value="transfer">transfer</option>
+        </select>
+      </label>
+      <label>Spender / recipient
+        <select id="editAddr"></select>
+      </label>
+      <label>Amount (USDC)
+        <input id="editAmt" value="unlimited" />
+      </label>
+      <button id="editApply">Rebuild calldata</button>
+    </div>
+    <p class="hint">Swap the attacker for the allowlisted router → verdict turns green. Set amount to 900 for the router → blocked for the cap, not malice.</p>
+  </details>
+</section>
+
+<!-- TWO RUNS -->
+<div class="runs">
+  <section class="card run" id="runNoFw">
+    <div class="card-head">
+      <h2>Run 1 — No Firewall</h2>
+      <button id="btnNoFw" class="danger">▶ Agent signs blindly</button>
+    </div>
+    <div class="treasury">
+      <div class="t-label">Treasury <span id="balNoFw">10,000.00 USDC</span></div>
+      <div class="bar"><div class="fill" id="barNoFw" style="width:100%"></div></div>
+    </div>
+    <div class="log" id="logNoFw"><p class="dim">Waiting…</p></div>
+    <div class="outcome" id="outNoFw"></div>
+  </section>
+
+  <section class="card run" id="runFw">
+    <div class="card-head">
+      <h2>Run 2 — With Firewall</h2>
+      <button id="btnFw" class="safe-btn">▶ Agent asks the firewall first</button>
+    </div>
+    <div class="treasury">
+      <div class="t-label">Treasury <span id="balFw">10,000.00 USDC</span></div>
+      <div class="bar"><div class="fill" id="barFw" style="width:100%"></div></div>
+    </div>
+    <div class="log" id="logFw"><p class="dim">Waiting…</p></div>
+    <div class="outcome" id="outFw"></div>
+  </section>
+</div>
+
+<!-- PROMPT-INJECTION PLAYGROUND -->
+<section class="card playground">
+  <div class="card-head">
+    <h2>💬 Attack the Agent — live prompt injection</h2>
+    <span class="hint">Talk the gullible TraderBot into moving treasury funds. The firewall is its backstop.</span>
+  </div>
+
+  <div class="pg-controls">
+    <label class="toggle">
+      <input type="checkbox" id="fwToggle" checked />
+      <span>🛡️ Firewall co-signer <b id="fwState">ON</b></span>
+    </label>
+    <span class="agent-status" id="agentStatus">agent: …</span>
+    <button id="pgReset" class="ghost">Reset conversation &amp; treasury</button>
+  </div>
+
+  <div class="pg-treasury">
+    Treasury: <b id="pgBal">10,000.00 USDC</b> · Attacker holds: <b id="pgAtk">0.00 USDC</b>
+  </div>
+
+  <div class="techniques">
+    <div class="tq-intro">Pick an attack technique — watch the agent's <b>thought process</b> as it runs:</div>
+    <div class="tq-cards">
+      <button class="tq" data-tq="naive">
+        <span class="tq-h">😐 Naive</span>
+        <span class="tq-d">Just ask it directly. A guardrailed agent should refuse — and this one does.</span>
+      </button>
+      <button class="tq" data-tq="encoded">
+        <span class="tq-h">🔤 Encoded <em>(the Grok method)</em></span>
+        <span class="tq-d">Hide the order in Morse, framed as "translate this". Slips past the guardrail.</span>
+      </button>
+      <button class="tq" data-tq="indirect">
+        <span class="tq-h">🕳️ Indirect</span>
+        <span class="tq-d">Bury the order in a data feed the agent is asked to "just process".</span>
+      </button>
+    </div>
+  </div>
+
+  <div class="chat" id="chat"></div>
+
+  <div class="chat-input">
+    <input id="chatMsg" placeholder="…or type your own message to the agent" />
+    <button id="chatSend">Send</button>
+  </div>
+</section>
+
+<!-- REAL-WORLD PROOF -->
+<section class="card proof">
+  <div class="card-head">
+    <h2>🌍 Real-World Proof — real Ethereum, real USDC, real thief</h2>
+    <span class="hint">Not our sandbox villain. A real attack, on a throwaway copy of the live network.</span>
+  </div>
+  <div class="safety-banner">
+    🔒 <b>Nothing real is touched.</b> Every proof below runs inside a <b>sealed, throwaway copy</b> of the
+    blockchain — like a bomb squad's blast chamber. We re-enact a real theft to prove it's real and watch
+    the money move, but the <b>live network is never touched, no real funds move, and your system is never
+    attacked</b>. The copy is discarded the moment we're done.
+  </div>
+  <p class="proof-intro">
+    This forks <b>real Ethereum mainnet</b>, funds a treasury with <b>real USDC</b>, and points a
+    <b>real drainer address from the public ScamSniffer blocklist</b> at it — an account that's on that
+    list because it has robbed real people. Then it runs the attack with and without the firewall.
+    Every address is verifiable on Etherscan. Nothing touches the live network; no real funds move.
+  </p>
+  <button id="proofRun" class="proof-btn">▶ Run the real-world proof</button>
+  <span class="proof-status" id="proofStatus"></span>
+  <div id="proofResult"></div>
+
+  <div class="replay-block">
+    <h3 class="replay-title">📼 …or replay an <em>actual</em> historical theft, byte-for-byte</h3>
+    <p class="proof-intro">
+      Even stronger: pick a <b>real theft that already happened</b>. We fetch that transaction's exact
+      bytes by its hash, rewind Ethereum to the block right before it, and replay the <b>identical
+      transaction</b> — the real victim really loses their real tokens on the fork. Then we show the
+      firewall flag those same bytes <b>MALICIOUS</b>. This isn't a blocklist lookup dressed up: the
+      firewall <b>executes the real transaction and watches the money leave</b>.
+    </p>
+    <div id="attackList" class="attack-list"></div>
+    <span class="proof-status" id="replayStatus"></span>
+    <div id="replayResult"></div>
+  </div>
+</section>
+
+<footer>
+  Backend: <span id="backend">…</span> · <span id="intel">threat intel loading…</span><br />
+  Testnet/local chain only — no mainnet keys or funds are ever touched.
+</footer>
+
+<script src="app.js"></script>
+</body>
+</html>

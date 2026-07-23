@@ -1,0 +1,24 @@
+# Render Blueprint — one-connect deploy.
+# In the Render dashboard: New → Blueprint → connect this repo. Render reads
+# this file and the Dockerfile automatically.
+#
+# Plan note: the core demo (two-run, agent playground) runs on `starter`
+# (512 MB). The mainnet-fork features (Real-World Proof, Historical Replay)
+# fork an archive node in a child process and are memory-heavy — bump to
+# `standard` (2 GB) if you want those rock-solid for judges.
+services:
+  - type: web
+    name: transaction-firewall
+    runtime: docker
+    plan: starter
+    dockerfilePath: ./Dockerfile
+    healthCheckPath: /api/chain
+    autoDeploy: true
+    envVars:
+      - key: PORT
+        value: "4780"
+      # Optional overrides (defaults are public endpoints; no key needed):
+      # - key: SEPOLIA_RPC_URL
+      #   value: https://ethereum-sepolia-rpc.publicnode.com
+      # - key: MAINNET_RPC_URL
+      #   value: https://ethereum-rpc.publicnode.com

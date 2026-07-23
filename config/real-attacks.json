@@ -1,0 +1,51 @@
+{
+  "note": "REAL, on-chain theft transactions — each hash is public and viewable on a block explorer. The historical-replay proof (scripts/historical-replay.ts) fetches each transaction's exact bytes by hash, forks its chain at the block just before it, replays the identical bytes (the real victim really loses real tokens on the fork), and shows the firewall flag it MALICIOUS. Nothing is fabricated; verify any hash/address on etherscan.io or basescan.org.",
+  "attacks": [
+    {
+      "id": "grok-bankr-agent-drain",
+      "chain": "base",
+      "hash": "0x6fc7eb7da9379383efda4253e4f599bbc3a99afed0468eabfe18484ec525739a",
+      "block": 45543997,
+      "method": "transfer",
+      "token": "0x3ec2156d4c0a9cbdab4a016633b7bcf6a8d68ea2",
+      "tokenSymbol": "DRB",
+      "tokenDecimals": 18,
+      "drainer": "0xe8e476bdd78b0aa6669509ec8d3e1c542d5a686b",
+      "victim": "0xb1058c959987e3513600eb5b4fd82aeee2a0e4f9",
+      "amount": "3,000,000,000",
+      "agentAttack": true,
+      "title": "The real Grok / Bankr AI-agent hack",
+      "description": "The actual May-2026 incident. An attacker prompt-injected the Grok/Bankr AI agent (via a Morse-code message on X) into signing this transfer of 3 BILLION DRB tokens (~$150-200K) out of the agent-controlled wallet. The AGENT ITSELF is the sender. The attacker address is NOT on any blocklist — yet the firewall still blocks it, because it watches the agent's balance drain to a non-allowlisted address. This is the exact attack this whole project exists to stop."
+    },
+    {
+      "id": "usdt-approval-drain",
+      "chain": "ethereum",
+      "hash": "0xa129cc90075ec1b1ad824246a7923e5dbfc0d8cbbbe487a66f4f97b44add64b5",
+      "block": 16915469,
+      "method": "transferFrom",
+      "token": "0xdac17f958d2ee523a2206206994597c13d831ec7",
+      "tokenSymbol": "USDT",
+      "tokenDecimals": 6,
+      "drainer": "0x0a63054930e47814d9ff6071923011cbb9ae6a78",
+      "victim": "0x90b7ca84bb3423486a05739e5c1e67aadfecd294",
+      "amount": "76.08",
+      "title": "Approval-drain (USDT)",
+      "description": "The classic drain: the victim had earlier approved this attacker (a routine-looking approval). The attacker then used that approval to pull 76 USDT straight out of the victim's wallet with transferFrom. Same disguised-approval pattern as the Grok hack."
+    },
+    {
+      "id": "usdc-direct-transfer",
+      "chain": "ethereum",
+      "hash": "0x7ef12313f3d1b586aa4aec9429bde04f938994ab7b0347af317350cf6949e7e5",
+      "block": 16722661,
+      "method": "transfer",
+      "token": "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48",
+      "tokenSymbol": "USDC",
+      "tokenDecimals": 6,
+      "drainer": "0xc3e6157dfe1bfc2bd93cf74cde85b0ca7ba77aa8",
+      "victim": "0x940e7be125a41998b9724b35e6e4167c43f531a8",
+      "amount": "7.43",
+      "title": "Direct-transfer phish (USDC)",
+      "description": "The victim themselves signed this one — tricked into sending USDC straight to the attacker's address. The transaction is genuine and 'valid'; the only thing wrong with it is where the money is going."
+    }
+  ]
+}

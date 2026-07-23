@@ -1,0 +1,8 @@
+node_modules/
+dist/
+*.log
+tools/
+data/
+.cosigner/
+contracts/out/
+contracts/cache/

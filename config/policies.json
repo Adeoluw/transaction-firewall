@@ -1,0 +1,16 @@
+{
+  "policies": [
+    {
+      "id": "treasury-default",
+      "name": "Treasury default policy",
+      "allowlist": [
+        "0x7770000000000000000000000000000000000777",
+        "0x5500000000000000000000000000000000000055"
+      ],
+      "noUnlimitedApprovals": true,
+      "maxValuePerTx": "500000000",
+      "treasuryBalance": "10000000000",
+      "maxTreasuryPctPerTx": 10
+    }
+  ]
+}

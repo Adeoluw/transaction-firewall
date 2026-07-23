@@ -1,0 +1,11 @@
+node_modules
+tools
+.cosigner
+data
+.git
+.gitignore
+contracts/out
+contracts/cache
+*.log
+demo
+npm-debug.log*
