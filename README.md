@@ -34,6 +34,41 @@ npm test           # 37 tests: decode, policy, verdicts, agent, + real-chain att
 npm run seed       # regenerate seed/payloads.json (offline-mode committed bytes)
 ```
 
+## Deploy (Railway, Render, or any Docker host)
+
+The repo ships a `Dockerfile` (installs Foundry into the image) and a
+`render.yaml` blueprint, so it deploys to any container host from the committed
+source. No build step, no keys required.
+
+**Railway (easiest):**
+
+1. railway.app then New Project, Deploy from GitHub repo, pick this repo.
+2. Railway auto-detects the Dockerfile and builds (first build takes a few
+   minutes while Foundry installs).
+3. Variables, add `PROOF_CACHE` = `1` (see below).
+4. Settings, Networking, Generate Domain for the public URL.
+
+**Render:** New, Blueprint, connect the repo. Render reads `render.yaml`
+(which already sets `PROOF_CACHE=1`) and the Dockerfile automatically.
+
+### `PROOF_CACHE` (recommended on small / free hosts)
+
+The Historical Replay and Real-World Proof fork an archive node in a child
+process, which is memory-heavy and can OOM a 512 MB instance. Set:
+
+```
+PROOF_CACHE=1
+```
+
+and those replays serve the **real, pre-captured result instantly** instead of
+forking live. The result card shows a "verified, cached result" badge and still
+links to the on-chain transaction so anyone can verify it. Locally (no variable
+set) the app re-runs the live fork, and it also falls back to the cache if a
+live fork ever fails, so a viewer never hits an error.
+
+Drop `PROOF_CACHE` and use a larger instance (Render `standard` / 2 GB) only if
+you want the replays to re-execute live on the host.
+
 ## The two-run stage script
 
 1. Open http://localhost:4780. Footer shows the live backend (`anvil — LIVE SEPOLIA FORK`) and threat-intel count. The **hero payload** is preloaded, labeled *"Swap 100 USDC → TOKEN via Router"*, actually `approve(0xBad…, maxUint256)`.
