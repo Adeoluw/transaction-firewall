@@ -1,0 +1,44 @@
+{
+  "note": "Real results captured from genuine historical-replay runs. Served (with a visible 'cached' badge) when PROOF_CACHE=1, so a memory-limited free host shows the real, verifiable result instantly instead of spinning up an archive fork. Every number here came from an actual run; the transactions are verifiable on-chain.",
+  "results": {
+    "grok-bankr-agent-drain": {
+      "victimBefore": "3182413261.726449893355413106",
+      "stolen": "3000000000",
+      "verdict": {
+        "verdict": "malicious",
+        "blocked": true,
+        "realEffect": "transfer 3000000000 DRB to Attacker wallet (from the real incident)",
+        "counterparty": "0xe8e476bdd78b0aa6669509ec8d3e1c542d5a686b",
+        "flags": [],
+        "violations": ["counterparty_not_allowlisted", "max_value_per_tx_exceeded", "treasury_pct_cap_exceeded", "treasury_drain"],
+        "reason": "Transaction claims \"transfer(…) — looks routine\" but its real effect is: transfer 3000000000 DRB to Attacker wallet (from the real incident). Simulation shows the treasury LOSES 3000000000 DRB to 0xe8e476bd…."
+      }
+    },
+    "usdt-approval-drain": {
+      "victimBefore": "76.077033",
+      "stolen": "76.077033",
+      "verdict": {
+        "verdict": "malicious",
+        "blocked": true,
+        "realEffect": "transfer 76.077033 USDT to Attacker wallet (from the real incident)",
+        "counterparty": "0x0a63054930e47814d9ff6071923011cbb9ae6a78",
+        "flags": ["threatlist"],
+        "violations": ["counterparty_not_allowlisted", "counterparty_on_threatlist", "treasury_drain"],
+        "reason": "Transaction claims \"transferFrom(…) — looks routine\" but its real effect is: transfer 76.077033 USDT to Attacker wallet (from the real incident). Simulation shows the treasury LOSES 76.077033 USDT to 0x0a630549…. Counterparty 0x0a630549… is on the threat list (Real drainer (approval-drain, USDT) — ScamSniffer blocklist)."
+      }
+    },
+    "usdc-direct-transfer": {
+      "victimBefore": "7.431392",
+      "stolen": "7.431392",
+      "verdict": {
+        "verdict": "malicious",
+        "blocked": true,
+        "realEffect": "transfer 7.431392 USDC to Attacker wallet (from the real incident)",
+        "counterparty": "0xc3e6157dfe1bfc2bd93cf74cde85b0ca7ba77aa8",
+        "flags": ["threatlist", "fresh_address"],
+        "violations": ["counterparty_not_allowlisted", "counterparty_on_threatlist", "treasury_drain"],
+        "reason": "Transaction claims \"transfer(…) — looks routine\" but its real effect is: transfer 7.431392 USDC to Attacker wallet (from the real incident). Simulation shows the treasury LOSES 7.431392 USDC to 0xc3e6157d…. Counterparty 0xc3e6157d… is on the threat list (Real drainer (direct-transfer phish, USDC) — ScamSniffer blocklist)."
+      }
+    }
+  }
+}

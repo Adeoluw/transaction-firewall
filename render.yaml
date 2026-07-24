@@ -2,10 +2,10 @@
 # In the Render dashboard: New → Blueprint → connect this repo. Render reads
 # this file and the Dockerfile automatically.
 #
-# Plan note: the core demo (two-run, agent playground) runs on `starter`
-# (512 MB). The mainnet-fork features (Real-World Proof, Historical Replay)
-# fork an archive node in a child process and are memory-heavy — bump to
-# `standard` (2 GB) if you want those rock-solid for judges.
+# Plan note: with PROOF_CACHE=1 (below) the Historical Replay serves the real
+# captured result instead of forking an archive node, so the whole app stays
+# light and `starter` (512 MB) is fine for judges. Drop PROOF_CACHE and bump to
+# `standard` (2 GB) only if you want the replays to re-execute live on the host.
 services:
   - type: web
     name: transaction-firewall
@@ -17,6 +17,11 @@ services:
     envVars:
       - key: PORT
         value: "4780"
+      # Serve the real, pre-captured replay results (fast + memory-safe on a
+      # small host). The result card shows a "cached" badge and stays
+      # verifiable on-chain. Remove this to re-run the live archive fork.
+      - key: PROOF_CACHE
+        value: "1"
       # Optional overrides (defaults are public endpoints; no key needed):
       # - key: SEPOLIA_RPC_URL
       #   value: https://ethereum-sepolia-rpc.publicnode.com

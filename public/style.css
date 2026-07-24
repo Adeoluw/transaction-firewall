@@ -184,6 +184,10 @@ summary { cursor: pointer; color: var(--dim); font-size: .85rem; margin-bottom: 
 .attack-row button:hover { background: #7d4ae6; }
 .attack-row button:disabled { opacity: .5; cursor: default; }
 .replay-card { margin-top: 12px; border: 1px solid #1f5a44; border-radius: 10px; padding: 14px; background: var(--card2); }
+.replay-cardhead { display: flex; align-items: center; justify-content: space-between; gap: 10px; margin-bottom: 10px; flex-wrap: wrap; }
+.replay-cardtitle { font-weight: 700; font-size: .95rem; color: var(--text); }
+.cached-badge { flex: none; font-family: Consolas, monospace; font-size: .74rem; font-weight: 700;
+  color: var(--amber); background: #2a2314; border: 1px solid #574517; padding: 3px 9px; border-radius: 999px; cursor: help; }
 .replay-card .drain { color: var(--red); font-weight: 700; font-family: Consolas, monospace; }
 .replay-card .block { color: var(--green); font-weight: 800; font-family: Consolas, monospace; font-size: 1.02rem; }
 .replay-card .behavioral { margin: 10px 0; padding: 10px 12px; border-radius: 8px; background: #201a2e; border: 1px solid #4a2fa0; font-size: .84rem; line-height: 1.5; color: var(--text); }

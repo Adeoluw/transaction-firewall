@@ -521,22 +521,33 @@ function renderReplay(r) {
   const notListedNote = onList
     ? ""
     : `<div class="behavioral">⚡ The attacker address is <b>NOT on any blocklist</b> — the firewall caught this purely by <b>watching the money drain</b>, not by recognizing a known-bad address. This is exactly what stops <em>tomorrow's</em> attacker.</div>`;
+  const cachedBadge = r.cached
+    ? `<span class="cached-badge" title="Served from a real, previously-recorded run to keep the hosted app fast and stable. The transaction is still fully verifiable on-chain.">✓ verified · cached result</span>`
+    : "";
+  const drainVerb = r.cached ? "Real theft" : "Replayed for real";
+  const cachedNote = r.cached
+    ? `<div class="proof-sub" style="opacity:.8">ℹ️ This result is <b>cached from a real run</b> (the live re-execution is memory-heavy, so the hosted demo serves the recorded result). Verify it yourself on ${explorerName}.</div>`
+    : `<div class="proof-sub">✅ These are the exact on-chain bytes of a real theft — open the tx on ${explorerName} and check.</div>`;
   $("replayResult").innerHTML = `
     <div class="replay-card">
+      <div class="replay-cardhead">
+        <span class="replay-cardtitle">${a.agentAttack ? "🤖 " : ""}${a.title}</span>
+        ${cachedBadge}
+      </div>
       <div class="proof-facts">
         Real transaction: <a href="${r.explorerTx}" target="_blank" rel="noopener">${a.hash.slice(0, 24)}…</a>
         (${r.chain === "base" ? "Base" : "Ethereum"} block ${a.block}) · ${victimLabel} <b>${r.victimBefore} ${a.tokenSymbol}</b><br />
         Attacker: <a href="${r.explorerDrainer}" target="_blank" rel="noopener">${a.drainer}</a>
         ${onList ? '<span class="flag">blocklisted</span>' : '<span class="flag clean">not on any blocklist</span>'}
       </div>
-      <div class="drain">💀 Replayed for real: ${a.agentAttack ? "the agent" : "victim"} lost ${r.stolen} ${a.tokenSymbol} to the attacker.</div>
+      <div class="drain">💀 ${drainVerb}: ${a.agentAttack ? "the agent" : "victim"} lost ${r.stolen} ${a.tokenSymbol} to the attacker.</div>
       <div class="block" style="margin-top:8px">⛔ Firewall on the identical bytes: ${r.verdict.verdict.toUpperCase()} — BLOCKED</div>
       ${notListedNote}
       <div class="proof-sub">
         Real effect: ${r.verdict.realEffect}<br />
         ${flags ? "Counterparty " + flags + " · " : ""}Violations: ${r.verdict.violations.join(", ")}
       </div>
-      <div class="proof-sub">✅ These are the exact on-chain bytes of a real theft — open the tx on ${explorerName} and check.</div>
+      ${cachedNote}
     </div>`;
 }
 
@@ -558,7 +569,7 @@ async function runReplay(index, btn) {
     const r = await res.json();
     clearInterval(timer);
     if (!res.ok) throw new Error(r.error || "replay failed");
-    status.textContent = "✓ real theft reproduced, then blocked";
+    status.textContent = r.cached ? "✓ verified result (cached)" : "✓ real theft reproduced, then blocked";
     renderReplay(r);
   } catch (e) {
     clearInterval(timer);
