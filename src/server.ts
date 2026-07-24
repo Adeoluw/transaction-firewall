@@ -128,7 +128,7 @@ app.get("/api/chain", async (_req, res) => {
   });
 });
 
-// Run 1: execute unchecked, for real, on the local chain — then let the
+// Run 1: execute unchecked, for real, on the local chain - then let the
 // "attacker bot" exploit whatever the tx granted it.
 app.post("/api/execute", async (req, res) => {
   try {
@@ -233,7 +233,7 @@ app.post("/api/proof", async (_req, res) => {
 app.get("/api/proof/attacks", (_req, res) => res.json(realAttacks));
 
 // Build a proof result from the committed real-run cache (for memory-limited
-// hosts). Marked `cached: true` so the UI shows a "cached" badge — the numbers
+// hosts). Marked `cached: true` so the UI shows a "cached" badge - the numbers
 // are genuine and the transaction stays verifiable on-chain.
 function cachedReplay(index: number): Record<string, unknown> | null {
   const attack = realAttacks.attacks[index] ?? realAttacks.attacks[0];
@@ -271,7 +271,7 @@ app.post("/api/proof/historical", async (req, res) => {
       ),
     );
   } catch (err) {
-    // Live fork failed (flaky archive RPC / low memory) — fall back to the real
+    // Live fork failed (flaky archive RPC / low memory) - fall back to the real
     // cached result rather than showing an error to a judge.
     const cached = cachedReplay(index);
     if (cached) return res.json(cached);
@@ -282,7 +282,7 @@ app.post("/api/proof/historical", async (req, res) => {
 // --- Prompt-injection playground -------------------------------------------
 // A person chats with the (gullible) Trader Agent and tries to talk it into
 // moving funds. Whatever tx the agent is tricked into producing is routed
-// through the firewall co-signer when `firewall` is true — showing the
+// through the firewall co-signer when `firewall` is true - showing the
 // firewall catch an attack the agent itself fell for.
 app.get("/api/agent/status", async (_req, res) => {
   res.json(await llmStatus(true));
@@ -303,7 +303,7 @@ app.post("/api/agent", async (req, res) => {
     const turn = await runAgent((history ?? []).slice(-8), message, technique ?? "naive");
     const base = { steps: turn.steps, refused: turn.refused, technique: turn.technique };
 
-    // No action decided — the agent talked, or its own guardrail refused.
+    // No action decided - the agent talked, or its own guardrail refused.
     if (!turn.tx) {
       return res.json({ reply: turn.decision.reply, decision: turn.decision, tx: null, ...base });
     }
@@ -426,9 +426,9 @@ app.listen(port, async () => {
       console.log(`  Treasury funded:   10,000 USDC + 100 ETH`);
       console.log("Simulation backend: anvil (real fork execution)");
     } else {
-      console.log("Anvil failed to start — simulation backend: decode fallback");
+      console.log("Anvil failed to start - simulation backend: decode fallback");
     }
   } else {
-    console.log("Anvil not found — simulation backend: decode fallback");
+    console.log("Anvil not found - simulation backend: decode fallback");
   }
 });

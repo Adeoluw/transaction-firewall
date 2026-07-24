@@ -45,7 +45,7 @@ function loadAddresses(list: string[]) {
   feedCount = list.length;
 }
 
-/** Fetch/refresh the live feed. Never throws — the firewall must still run offline. */
+/** Fetch/refresh the live feed. Never throws - the firewall must still run offline. */
 export async function initThreatIntel(): Promise<void> {
   try {
     if (existsSync(CACHE_FILE)) {
@@ -57,7 +57,7 @@ export async function initThreatIntel(): Promise<void> {
       }
     }
   } catch {
-    /* corrupt cache — refetch */
+    /* corrupt cache - refetch */
   }
 
   try {

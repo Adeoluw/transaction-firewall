@@ -1,6 +1,6 @@
 // Local LLM adapter. Talks to Ollama's HTTP API when it's running; otherwise
 // reports unavailable so the agent falls back to deterministic mode. Free and
-// offline — no API keys, no per-call cost.
+// offline - no API keys, no per-call cost.
 const OLLAMA_URL = process.env.OLLAMA_URL ?? "http://127.0.0.1:11434";
 export const MODEL = process.env.OLLAMA_MODEL ?? "llama3.2:3b";
 

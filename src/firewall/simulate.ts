@@ -1,9 +1,9 @@
-// Simulate module — determines a tx's real effects behind a pluggable interface.
+// Simulate module - determines a tx's real effects behind a pluggable interface.
 //
 // Backends:
 //  - AnvilSimulator: REAL simulation. Executes the proposed tx on the local
 //    Anvil node (a Sepolia fork when the RPC is reachable) inside a snapshot,
-//    reads the emitted Transfer/Approval logs — ground truth, not guesses —
+//    reads the emitted Transfer/Approval logs - ground truth, not guesses -
 //    then reverts the snapshot so nothing persists.
 //  - DecodeSimulator: deterministic static decode. Always available, so the
 //    firewall still answers with no chain running.
@@ -57,7 +57,7 @@ export class AnvilSimulator implements Simulator {
   async simulate(tx: ProposedTx): Promise<SimulationResult> {
     const chain = getChain();
     if (!chain) {
-      // Anvil installed but node not running — static decode, honestly labeled.
+      // Anvil installed but node not running - static decode, honestly labeled.
       return { effects: decodeEffects(tx), backend: "decode", simulated: false };
     }
 
@@ -100,7 +100,7 @@ export class AnvilSimulator implements Simulator {
           if (!approved) continue;
           effects.push({
             kind: "approval_all",
-            description: `setApprovalForAll(${shorten(operator)}, true) on ${labelFor(token)} — grants control of ALL tokens in the collection`,
+            description: `setApprovalForAll(${shorten(operator)}, true) on ${labelFor(token)} - grants control of ALL tokens in the collection`,
             token,
             counterparty: operator.toLowerCase(),
             unlimited: true,
@@ -140,7 +140,7 @@ export class AnvilSimulator implements Simulator {
       };
 
       // A net treasury outflow with no matching log-level effect still needs to
-      // surface (e.g. exotic drains) — synthesize one so the verdict sees it.
+      // surface (e.g. exotic drains) - synthesize one so the verdict sees it.
       if (usdcAfter < usdcBefore && effects.every((e) => e.kind !== "transfer")) {
         const lost = usdcBefore - usdcAfter;
         effects.push({

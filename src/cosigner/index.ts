@@ -1,6 +1,6 @@
 // Tier 2 co-signer: holds the treasury's signing key and will ONLY sign a
 // transaction the firewall passes. This turns the verdict from advice into an
-// enforced gate — an agent without this signature cannot move treasury funds.
+// enforced gate - an agent without this signature cannot move treasury funds.
 //
 // SAFETY: the key is a locally generated dev key for the demo chain / Sepolia
 // testnet only. It is git-ignored and never used on mainnet.

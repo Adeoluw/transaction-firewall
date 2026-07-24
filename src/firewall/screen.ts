@@ -1,4 +1,4 @@
-// Screen module — checks counterparties against threat intel (local list +
+// Screen module - checks counterparties against threat intel (local list +
 // live ScamSniffer feed) and their real on-chain history when a chain is
 // available, falling back to the mocked age table offline.
 import type { CounterpartyScreen } from "../types.js";

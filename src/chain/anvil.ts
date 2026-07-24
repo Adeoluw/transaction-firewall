@@ -32,7 +32,7 @@ const RPC_URL = `http://127.0.0.1:${ANVIL_PORT}`;
 const SEPOLIA_RPC = process.env.SEPOLIA_RPC_URL ?? "https://ethereum-sepolia-rpc.publicnode.com";
 const MAINNET_RPC = process.env.MAINNET_RPC_URL ?? "https://ethereum-rpc.publicnode.com";
 
-// Real Ethereum mainnet addresses — used by the real-world proof (mainnet
+// Real Ethereum mainnet addresses - used by the real-world proof (mainnet
 // fork). Anyone can verify these on Etherscan.
 export const REAL_USDC = "0xA0b86991c6218b36c1d19D4a2e9Eb0cE3606eB48"; // Circle USDC
 const USDC_WHALE = "0x55FE002aefF02F77364de339a1292923A15844B8"; // Circle: ~$66M USDC
@@ -44,7 +44,7 @@ export interface StartChainOptions {
   attacker?: string;
 }
 
-// Anvil's first dev account — used only as deployer/minter on the local node.
+// Anvil's first dev account - used only as deployer/minter on the local node.
 const DEPLOYER_KEY =
   "0xac0974bec39a17e36ba4a6b4d2238da4c8c8c8b1e7bc72ee1e176ba55a3fb1a0" as Hex;
 
@@ -75,7 +75,7 @@ export function anvilBinary(): string | null {
 }
 
 // Build a viem chain object using the node's ACTUAL chain id. A Sepolia fork
-// keeps id 11155111, a bare anvil is 31337 — hardcoding either causes every
+// keeps id 11155111, a bare anvil is 31337 - hardcoding either causes every
 // tx to fail viem's chain-id guard.
 function makeChain(chainId: number): Chain {
   return defineChain({
@@ -151,7 +151,7 @@ export interface ForkAtOptions {
 }
 
 /**
- * Bare mainnet fork pinned to a historical block — no demo contracts deployed.
+ * Bare mainnet fork pinned to a historical block - no demo contracts deployed.
  * Used by the historical-replay proof to reconstruct the exact on-chain state
  * just before a real theft, so the real transaction's bytes can be replayed.
  */
@@ -190,7 +190,7 @@ export async function startForkAt(
  *
  * - "sepolia" (default): forks Sepolia, deploys a demo USDC token and mints.
  * - "mainnet": forks REAL Ethereum, uses the REAL USDC contract, and funds the
- *   treasury by moving real USDC from a whale — for the real-world proof.
+ *   treasury by moving real USDC from a whale - for the real-world proof.
  */
 export async function startChain(
   treasuryAddress: string,
@@ -272,7 +272,7 @@ export async function startChain(
   const evilRouter = (await publicClient.waitForTransactionReceipt({ hash: evilHash })).contractAddress!;
 
   // Demo scenario for the "lying contract" attack: the treasury has already
-  // approved the (allowlisted-looking) EvilRouter for swaps — the way anyone
+  // approved the (allowlisted-looking) EvilRouter for swaps - the way anyone
   // approves a router before trading. The malice lives in the router's code,
   // which the firewall only sees by simulating. Impersonate the treasury to
   // set that allowance.

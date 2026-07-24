@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8" />
 <meta name="viewport" content="width=device-width, initial-scale=1" />
-<title>Transaction Firewall — Demo</title>
+<title>Transaction Firewall Demo</title>
 <link rel="stylesheet" href="style.css" />
 </head>
 <body>
@@ -39,7 +39,7 @@
   </label>
 
   <details id="morseBox">
-    <summary>📡 Deliver as encoded transmission (Morse — the Grok/Bankr trick)</summary>
+    <summary>📡 Deliver as encoded transmission (Morse, the Grok/Bankr trick)</summary>
     <textarea id="morseData" rows="4" spellcheck="false" readonly></textarea>
     <div class="btnrow">
       <button id="morseEncode" class="ghost">Encode current payload → Morse</button>
@@ -48,7 +48,7 @@
   </details>
 
   <details>
-    <summary>✏️ Live edit — prove it's not hardcoded</summary>
+    <summary>✏️ Live edit: prove it's not hardcoded</summary>
     <div class="row editrow">
       <label>Function
         <select id="editFn">
@@ -72,7 +72,7 @@
 <div class="runs">
   <section class="card run" id="runNoFw">
     <div class="card-head">
-      <h2>Run 1 — No Firewall</h2>
+      <h2>Run 1: No Firewall</h2>
       <button id="btnNoFw" class="danger">▶ Agent signs blindly</button>
     </div>
     <div class="treasury">
@@ -85,7 +85,7 @@
 
   <section class="card run" id="runFw">
     <div class="card-head">
-      <h2>Run 2 — With Firewall</h2>
+      <h2>Run 2: With Firewall</h2>
       <button id="btnFw" class="safe-btn">▶ Agent asks the firewall first</button>
     </div>
     <div class="treasury">
@@ -100,7 +100,7 @@
 <!-- PROMPT-INJECTION PLAYGROUND -->
 <section class="card playground">
   <div class="card-head">
-    <h2>💬 Attack the Agent — live prompt injection</h2>
+    <h2>💬 Attack the Agent: live prompt injection</h2>
     <span class="hint">Talk the gullible TraderBot into moving treasury funds. The firewall is its backstop.</span>
   </div>
 
@@ -118,11 +118,11 @@
   </div>
 
   <div class="techniques">
-    <div class="tq-intro">Pick an attack technique — watch the agent's <b>thought process</b> as it runs:</div>
+    <div class="tq-intro">Pick an attack technique, then watch the agent's <b>thought process</b> as it runs:</div>
     <div class="tq-cards">
       <button class="tq" data-tq="naive">
         <span class="tq-h">😐 Naive</span>
-        <span class="tq-d">Just ask it directly. A guardrailed agent should refuse — and this one does.</span>
+        <span class="tq-d">Just ask it directly. A guardrailed agent should refuse, and this one does.</span>
       </button>
       <button class="tq" data-tq="encoded">
         <span class="tq-h">🔤 Encoded <em>(the Grok method)</em></span>
@@ -146,18 +146,18 @@
 <!-- REAL-WORLD PROOF -->
 <section class="card proof">
   <div class="card-head">
-    <h2>🌍 Real-World Proof — real Ethereum, real USDC, real thief</h2>
+    <h2>🌍 Real-World Proof: real Ethereum, real USDC, real thief</h2>
     <span class="hint">Not our sandbox villain. A real attack, on a throwaway copy of the live network.</span>
   </div>
   <div class="safety-banner">
     🔒 <b>Nothing real is touched.</b> Every proof below runs inside a <b>sealed, throwaway copy</b> of the
-    blockchain — like a bomb squad's blast chamber. We re-enact a real theft to prove it's real and watch
+    blockchain, like a bomb squad's blast chamber. We re-enact a real theft to prove it's real and watch
     the money move, but the <b>live network is never touched, no real funds move, and your system is never
     attacked</b>. The copy is discarded the moment we're done.
   </div>
   <p class="proof-intro">
     This forks <b>real Ethereum mainnet</b>, funds a treasury with <b>real USDC</b>, and points a
-    <b>real drainer address from the public ScamSniffer blocklist</b> at it — an account that's on that
+    <b>real drainer address from the public ScamSniffer blocklist</b> at it, an account that's on that
     list because it has robbed real people. Then it runs the attack with and without the firewall.
     Every address is verifiable on Etherscan. Nothing touches the live network; no real funds move.
   </p>
@@ -170,7 +170,7 @@
     <p class="proof-intro">
       Even stronger: pick a <b>real theft that already happened</b>. We fetch that transaction's exact
       bytes by its hash, rewind Ethereum to the block right before it, and replay the <b>identical
-      transaction</b> — the real victim really loses their real tokens on the fork. Then we show the
+      transaction</b>, and the real victim really loses their real tokens on the fork. Then we show the
       firewall flag those same bytes <b>MALICIOUS</b>. This isn't a blocklist lookup dressed up: the
       firewall <b>executes the real transaction and watches the money leave</b>.
     </p>
@@ -182,7 +182,7 @@
 
 <footer>
   Backend: <span id="backend">…</span> · <span id="intel">threat intel loading…</span><br />
-  Testnet/local chain only — no mainnet keys or funds are ever touched.
+  Testnet/local chain only. No mainnet keys or funds are ever touched.
 </footer>
 
 <script src="app.js"></script>

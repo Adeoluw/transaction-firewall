@@ -1,4 +1,4 @@
-// Verdict module — combines simulation, screening, and policy results into a
+// Verdict module - combines simulation, screening, and policy results into a
 // final safe / suspicious / malicious verdict.
 import type {
   CounterpartyScreen,
@@ -29,15 +29,15 @@ export function buildVerdict(
       e.unlimited &&
       violations.includes("counterparty_not_allowlisted"),
   );
-  // Net treasury drain observed by balance-diff tracing — the strongest signal,
+  // Net treasury drain observed by balance-diff tracing - the strongest signal,
   // and one that doesn't depend on recognizing the calldata at all.
   const usdcDelta = sim.treasuryDelta ? BigInt(sim.treasuryDelta.usdc) : 0n;
   const drained = usdcDelta < 0n;
   const drainNote = drained
     ? `Simulation shows the treasury LOSES ${fmtTokenAmount(-usdcDelta, registry.usdc)} to ${sim.treasuryDelta!.recipients.map((r) => r.slice(0, 10) + "…").join(", ") || "an external address"}.`
     : "";
-  // A tx we couldn't fully resolve — a revert on the fork, or an unrecognized
-  // selector — is never "safe". Fail closed: the co-signer must not sign it.
+  // A tx we couldn't fully resolve - a revert on the fork, or an unrecognized
+  // selector - is never "safe". Fail closed: the co-signer must not sign it.
   const unresolved = effects.find((e) => e.kind === "unknown");
 
   let verdict: Verdict["verdict"];
@@ -45,7 +45,7 @@ export function buildVerdict(
 
   if (unresolved) {
     verdict = "suspicious";
-    reason = `Firewall could not verify this transaction's effects (${unresolved.description}). Failing closed — refusing to sign.`;
+    reason = `Firewall could not verify this transaction's effects (${unresolved.description}). Failing closed - refusing to sign.`;
     return {
       verdict,
       reason,

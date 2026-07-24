@@ -1,4 +1,4 @@
-// Decode module — turns raw calldata into plain-language effects.
+// Decode module - turns raw calldata into plain-language effects.
 import { decodeFunctionData, formatUnits, maxUint256, parseAbi } from "viem";
 import type { Effect, ProposedTx } from "../types.js";
 import addresses from "../../config/addresses.json" with { type: "json" };
@@ -26,7 +26,7 @@ const KNOWN_TOKENS: Record<string, { symbol: string; decimals: number }> = {
   "0xa0b86991c6218b36c1d19d4a2e9eb0ce3606eb48": { symbol: "USDC", decimals: 6 },
   "0x6b175474e89094c44da98b954eedeac495271d0f": { symbol: "DAI", decimals: 18 },
   "0xc02aaa39b223fe8d0a0e5c4f27ead9083c756cc2": { symbol: "WETH", decimals: 18 },
-  // DRB (Base) — the token drained in the real Grok/Bankr agent hack.
+  // DRB (Base) - the token drained in the real Grok/Bankr agent hack.
   "0x3ec2156d4c0a9cbdab4a016633b7bcf6a8d68ea2": { symbol: "DRB", decimals: 18 },
 };
 
@@ -105,7 +105,7 @@ export function decodeEffects(tx: ProposedTx): Effect[] {
       const unlimited = added >= NEAR_UNLIMITED_THRESHOLD;
       effects.push({
         kind: "approval",
-        description: `increaseAllowance(${shorten(spender)}, ${fmtAmount(added, token)}) on ${labelFor(token)} — same effect as approve`,
+        description: `increaseAllowance(${shorten(spender)}, ${fmtAmount(added, token)}) on ${labelFor(token)} - same effect as approve`,
         token,
         counterparty: spender.toLowerCase(),
         amount: added.toString(),
@@ -119,7 +119,7 @@ export function decodeEffects(tx: ProposedTx): Effect[] {
       if (approved) {
         effects.push({
           kind: "approval_all",
-          description: `setApprovalForAll(${shorten(operator)}, true) on ${labelFor(token)} — grants control of ALL tokens in the collection`,
+          description: `setApprovalForAll(${shorten(operator)}, true) on ${labelFor(token)} - grants control of ALL tokens in the collection`,
           token,
           counterparty: operator.toLowerCase(),
           unlimited: true,

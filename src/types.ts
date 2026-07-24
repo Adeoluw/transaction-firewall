@@ -50,7 +50,7 @@ export interface SimulationResult {
   backend: "anvil" | "decode";
   /** True if a real simulation ran (vs. static decode). */
   simulated: boolean;
-  /** Net treasury balance change — only present for real (anvil) simulation. */
+  /** Net treasury balance change - only present for real (anvil) simulation. */
   treasuryDelta?: BalanceDelta;
 }
 

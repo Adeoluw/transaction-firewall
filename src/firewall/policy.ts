@@ -1,4 +1,4 @@
-// Policy module — evaluates decoded effects against a configured policy.
+// Policy module - evaluates decoded effects against a configured policy.
 import type { CounterpartyScreen, Effect, Policy } from "../types.js";
 import policiesFile from "../../config/policies.json" with { type: "json" };
 import { registry } from "../chain/registry.js";
@@ -21,7 +21,7 @@ export function evaluatePolicy(
   // Config allowlist plus the runtime addresses of the deployed router/token
   // (contract addresses change per fork bootstrap).
   // Config allowlist plus deployed contracts. NOTE: the malicious EvilRouter is
-  // intentionally allowlisted — the point is that simulation catches its drain
+  // intentionally allowlisted - the point is that simulation catches its drain
   // from the *observed effects* even though the tx target passes the allowlist.
   const allowlist = new Set([
     ...policy.allowlist.map((a) => a.toLowerCase()),

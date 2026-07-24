@@ -10,15 +10,15 @@
       "addedAt": "2026-05-30"
     },
     "0x0a63054930e47814d9ff6071923011cbb9ae6a78": {
-      "label": "Real drainer (approval-drain, USDT) — ScamSniffer blocklist",
+      "label": "Real drainer (approval-drain, USDT) - ScamSniffer blocklist",
       "addedAt": "2023-03-27"
     },
     "0xc3e6157dfe1bfc2bd93cf74cde85b0ca7ba77aa8": {
-      "label": "Real drainer (direct-transfer phish, USDC) — ScamSniffer blocklist",
+      "label": "Real drainer (direct-transfer phish, USDC) - ScamSniffer blocklist",
       "addedAt": "2023-02-28"
     },
     "0x8cf6cc426e91b8e7877ddb33d3d2c0a5ee24f6ad": {
-      "label": "Real drainer (disguised withdrawAndRemove, USDC) — ScamSniffer blocklist",
+      "label": "Real drainer (disguised withdrawAndRemove, USDC) - ScamSniffer blocklist",
       "addedAt": "2023-06-15"
     }
   }

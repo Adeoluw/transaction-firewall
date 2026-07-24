@@ -94,7 +94,7 @@ export function buildSamples(a: SampleAddresses) {
     },
     {
       id: "lying-contract",
-      name: "🥷 Lying router — clean calldata, drains on execution (sim-only catch)",
+      name: "🥷 Lying router - clean calldata, drains on execution (sim-only catch)",
       claimed: "Swap 100 USDC → TOKEN via DEXMax (allowlisted)",
       expected: "malicious",
       // Only real fork simulation catches this; static decode is fooled and
@@ -119,7 +119,7 @@ export function buildSamples(a: SampleAddresses) {
     },
     {
       id: "increase-allowance",
-      name: "🎭 increaseAllowance — unlimited via a non-approve selector",
+      name: "🎭 increaseAllowance - unlimited via a non-approve selector",
       claimed: "Top up Router allowance",
       expected: "malicious",
       tx: {
@@ -134,7 +134,7 @@ export function buildSamples(a: SampleAddresses) {
     },
     {
       id: "approve-all-nft",
-      name: "🖼️ setApprovalForAll — hands over every NFT",
+      name: "🖼️ setApprovalForAll - hands over every NFT",
       claimed: "List NFT collection on marketplace",
       expected: "malicious",
       tx: {
@@ -149,7 +149,7 @@ export function buildSamples(a: SampleAddresses) {
     },
     {
       id: "batch-rider",
-      name: "🎁 Batch rider — real rebalance + hidden drain in one call",
+      name: "🎁 Batch rider - real rebalance + hidden drain in one call",
       claimed: "Rebalance 10 USDC to Router",
       expected: "malicious",
       // Unknown selector to a static decoder → fails closed (suspicious/blocked)
