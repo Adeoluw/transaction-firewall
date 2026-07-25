@@ -9,7 +9,7 @@ import { fileURLToPath } from "node:url";
 import { dirname, join } from "node:path";
 import { encodeFunctionData, formatUnits, maxUint256, parseAbi, parseUnits, type Hex } from "viem";
 import { assess } from "./firewall/assess.js";
-import { AnvilSimulator, selectSimulator } from "./firewall/simulate.js";
+import { AnvilSimulator, DecodeSimulator, selectSimulator } from "./firewall/simulate.js";
 import { POLICIES } from "./firewall/policy.js";
 import { initThreatIntel, threatIntelStatus } from "./firewall/threatfeed.js";
 import { cosignerAddress, signIfSafe } from "./cosigner/index.js";
@@ -413,6 +413,16 @@ app.listen(port, async () => {
   console.log(
     `Trader Agent LLM: ${llm.available ? `${llm.model} (Ollama)` : `deterministic fallback (${llm.reason})`}`,
   );
+
+  // DECODE_ONLY (set on memory-limited / public hosts): skip the live Sepolia
+  // fork entirely and run the lean static pipeline (decode + threat-list +
+  // policy). Self-contained and reliable: no upstream RPC, no archive-token
+  // dependency, no per-call fork. The /assess endpoint stays fully functional.
+  if (process.env.DECODE_ONLY === "1") {
+    simulatorPromise = Promise.resolve(new DecodeSimulator());
+    console.log("DECODE_ONLY mode: static decode + threat-list + policy (no live chain).");
+    return;
+  }
 
   const anvilPresent = await new AnvilSimulator().available();
   if (anvilPresent) {
